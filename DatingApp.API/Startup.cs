@@ -40,6 +40,7 @@ namespace DatingApp.API
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters{
