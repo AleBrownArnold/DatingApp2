@@ -17,10 +17,11 @@ namespace DatingApp.API.Migrations
                 table: "Users",
                 nullable: true);
 
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AddColumn<DateTime>(
                 name: "Created",
                 table: "Users",
-                nullable: true);
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "DateOfBirth",
@@ -40,6 +41,11 @@ namespace DatingApp.API.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Introduction",
+                table: "Users",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "KnownAs",
                 table: "Users",
                 nullable: true);
 
@@ -114,6 +120,10 @@ namespace DatingApp.API.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Introduction",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "KnownAs",
                 table: "Users");
 
             migrationBuilder.DropColumn(
