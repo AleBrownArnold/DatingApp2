@@ -20,6 +20,8 @@ import { appRoutes } from './routes';
 import { UserService } from './_services/user.service';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
+import { MemberListResolver } from './_resolvers/member-list.resolver';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -47,6 +49,7 @@ export function tokenGetter() {
       RouterModule.forRoot(appRoutes),
       JwtModule.forRoot({
          config: {
+            // tslint:disable-next-line: object-literal-shorthand
             tokenGetter: tokenGetter,
             whitelistedDomains: ['localhost:5000'],
             blacklistedRoutes: ['localhost:5000/api/auth']
@@ -56,7 +59,9 @@ export function tokenGetter() {
    providers: [
       AuthService,
       ErrorInterceptorProvider,
-      UserService
+      UserService,
+      MemberDetailResolver,
+      MemberListResolver
    ],
    bootstrap: [
       AppComponent
