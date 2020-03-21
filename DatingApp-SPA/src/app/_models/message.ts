@@ -4,7 +4,7 @@ export interface Message {
     senderKnownAs: string;
     senderPhotoUrl: string;
     recipientId: number;
-    recipientKnownAws: string;
+    recipientKnownAs: string;
     recipientPhotoUrl: string;
     content: string;
     isRead: boolean;
