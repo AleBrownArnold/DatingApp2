@@ -33,14 +33,20 @@ namespace DatingApp.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // Service is a method that we want another part of the application to use
+        public void ConfigureDevelopmentServices(IServiceCollection services) {
+            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            ConfigureServices(services);
+        }
+        public void ConfigureProductionServices(IServiceCollection services) {
+            services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            ConfigureServices(services);
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(opt => {
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
