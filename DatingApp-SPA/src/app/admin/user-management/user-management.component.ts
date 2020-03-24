@@ -31,17 +31,40 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  editRolesModal() {
+  editRolesModal(user: User) {
     const initialState = {
-      list: [
-        'Open a modal with component',
-        'Pass your data',
-        'Do something else',
-        '...'
-      ],
-      title: 'Modal with component'
+      user,
+      roles: this.getRolesArray(user)
     };
     this.bsModalRef = this.modalService.show(RolesModalComponent, {initialState});
     this.bsModalRef.content.closeBtnName = 'Close';
+  }
+
+  private getRolesArray(user) {
+    const roles = [];
+    const userRoles = user.roles;
+    const availableRoles: any[] = [
+      {name: 'Admin', value: 'Admin'},
+      {name: 'Moderator', value: 'Moderator'},
+      {name: 'Member', value: 'Member'},
+      {name: 'VIP', value: 'VIP'}
+    ];
+
+    for (const availableRole of availableRoles) {
+      let isMatch = false;
+      for (const userRole of userRoles) {
+        if (availableRole.name === userRole) {
+          isMatch = true;
+          availableRole.checked = true;
+          roles.push(availableRole);
+          break;
+        }
+      }
+      if (!isMatch) {
+        availableRole.checked = false;
+        roles.push(availableRole);
+      }
+    }
+    return roles;
   }
 }
